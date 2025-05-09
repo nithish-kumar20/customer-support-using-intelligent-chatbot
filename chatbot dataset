@@ -1,0 +1,65 @@
+import random
+import nltk
+from nltk.chat.util import Chat, reflections
+
+# Download necessary NLTK data (if not already downloaded)
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+
+# Define pairs of patterns and responses
+pairs = [
+    [
+        r"my name is (.*)",
+        ["Hello %1, how can I assist you today?",]
+    ],
+    [
+        r"what is your name?",
+        ["My name is SupportBot, and I'm here to help.",]
+    ],
+    [
+        r"how are you ?",
+        ["I'm doing well, thank you!", "I'm great, thanks for asking!",]
+    ],
+    [
+        r"sorry (.*)",
+        ["It's alright.", "No problem.", "Don't worry about it.",]
+    ],
+    [
+        r"i'm (.*) doing good",
+        ["Nice to hear that.", "That's wonderful.",]
+    ],
+    [
+        r"hi|hey|hello",
+        ["Hello! How can I assist you?", "Hi there! What can I do for you?",]
+    ],
+    [
+        r"(.*) (weather|temperature) (.*)",
+        ["I'm sorry, I don't have information about the weather.",]
+    ],
+    [
+        r"quit",
+        ["Bye! Take care.", "Goodbye, have a great day!",]
+    ],
+    [
+        r"(.*)",
+        ["I'm sorry, I didn't understand your question. Please try again.",
+         "Could you please rephrase your question?",
+         "I'm still under development, and I'm learning to understand more.",]
+    ],
+]
+
+# Create a chat bot object
+chatbot = Chat(pairs, reflections)
+
+# Main loop for chatbot interaction
+print("Welcome to our customer support chatbot!")
+print("Type 'quit' to exit.")
+
+while True:
+    user_input = input("You: ")
+    if user_input.lower() == 'quit':
+        break
+    response = chatbot.respond(user_input)
+    print("Chatbot:", response)
+
+print("Thank you for using our chatbot!")
